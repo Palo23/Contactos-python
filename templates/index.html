@@ -1,0 +1,66 @@
+{% extends 'layout.html' %} {% block body %}
+
+<div class="row padding-bottom">
+    <div class="col-md-5">
+
+        {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
+
+
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+        </div>
+
+        {% endfor %} {% endif %} {% endwith %}
+
+        <div class="card card-body">
+            <form action="/add_contact" method="POST">
+
+                <div class="form-group">
+                    <input type="text" name="fullname" placeholder="Nombre Completo" autofocus class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="telefono" placeholder="Teléfono" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Correo" class="form-control">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <div class="col-md-7">
+        <table class="table table-bordered table-striped table-sm">
+            <thead>
+                <tr>
+                    <td>Nombre</td>
+                    <td>Teléfono</td>
+                    <td>Email</td>
+                    <td>Acciones</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contacto in contactos %}
+                <tr>
+                    <td>{{ contacto.1 }}</td>
+                    <td>{{ contacto.2 }}</td>
+                    <td>{{ contacto.3 }}</td>
+                    <td>
+                        <a href="/edit/{{contacto.0}}" class="btn btn-warning">Editar</a>
+                        <a href="/delete/{{contacto.0}}" class="btn btn-danger btn-delete">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}
